@@ -7,15 +7,12 @@ from models.user import User
 from models.project import Project
 from models.task import Task
 
-# Simple console helper from the rich library for pretty output
 console = Console()
 
 def sync_id_counters(data):
-    # Make sure in-memory ID counters for models match the stored data.
-    # This prevents new objects from re-using IDs that already exist.
-    if data["users"]:
+    if data["users"]:    
         User._id_counter = max(u["id"] for u in data["users"])
-    if data["projects"]: 
+    if data["projects"]:
         Project._id_counter = max(p["id"] for p in data["projects"])
     if data["tasks"]:    
         Task._id_counter = max(t["id"] for t in data["tasks"])
@@ -29,7 +26,6 @@ def handle_add_user(args):
         save_data(data)
         console.print(f"[green]Successfully created user: {new_user}[/green]")
     except ValueError as e:
-        # Validation error (e.g., empty name or bad email) shows a friendly message
         console.print(f"[red]Error setting up profile fields: {e}[/red]")
 
 def handle_list_users(args):
@@ -54,7 +50,6 @@ def handle_add_project(args):
     new_project = Project(title=args.title, description=args.desc, due_date=args.due, user_id=args.user_id)
     data["projects"].append(new_project.to_dict())
     save_data(data)
-    # Confirm success to the user
     console.print(f"[green]Added project: '{new_project.title}' assigned to User ID {args.user_id}[/green]")
 
 def handle_list_projects(args):
@@ -82,37 +77,17 @@ def handle_add_task(args):
     new_task = Task(title=args.title, project_id=args.project_id)
     data["tasks"].append(new_task.to_dict())
     save_data(data)
-    # Let the user know the task was created
     console.print(f"[green]Added task '{new_task.title}' to Project ID {args.project_id}[/green]")
 
 def handle_complete_task(args):
     data = load_data()
     for t in data["tasks"]:
         if t["id"] == args.task_id:
-                t["status"] = "Completed"
-                save_data(data)
-                # Mark task completed and save the change
-                console.print(f"[green]Task ID {args.task_id} status updated to 'Completed'[/green]")
+            t["status"] = "Completed"
+            save_data(data)
+            console.print(f"[green]Task ID {args.task_id} status updated to 'Completed'[/green]")
             return
     console.print(f"[red]Task ID {args.task_id} not found.[/red]")
-
-def handle_list_tasks(args):
-    """Renders out tracked tasks inside a formatted UI table."""
-    data = load_data()
-    table = Table(title="Project Task Milestones")
-    table.add_column("Task ID", style="cyan")
-    table.add_column("Title", style="magenta")
-    table.add_column("Proj ID", style="yellow")
-    table.add_column("Status", style="green")
-
-    for t in data["tasks"]:
-        if args.project_id and t["project_id"] != args.project_id:
-            continue
-            
-        status_style = "[green]Completed[/green]" if t["status"] == "Completed" else "[yellow]Pending[/yellow]"
-        table.add_row(str(t["id"]), t["title"], str(t["project_id"]), status_style)
-        
-    console.print(table)
 
 def main():
     parser = argparse.ArgumentParser(description="Multi-User Production Tracker CLI Platform Interface Engine")
@@ -125,8 +100,7 @@ def main():
     u_add.set_defaults(func=handle_add_user)
 
     # List Users
-    u_lst = subparsers.add_parser("list-users", help="Render out database global profiles.")
-    u_lst.set_defaults(func=handle_list_users)
+    subparsers.add_parser("list-users", help="Render out database global profiles.")
     
     # Add Project
     p_add = subparsers.add_parser("add-project", help="Create an assignment canvas node.")
@@ -152,15 +126,12 @@ def main():
     t_cmp.add_argument("--task-id", type=int, required=True)
     t_cmp.set_defaults(func=handle_complete_task)
 
-    # List Tasks
-    t_lst = subparsers.add_parser("list-tasks", help="Render task tracking items.")
-    t_lst.add_argument("--project-id", type=int, help="Filter down to a target project.")
-    t_lst.set_defaults(func=handle_list_tasks)
-
     args = parser.parse_args()
 
     if hasattr(args, "func"):
         args.func(args)
+    elif args.command == "list-users":
+        handle_list_users(args)
     else:
         parser.print_help()
 
