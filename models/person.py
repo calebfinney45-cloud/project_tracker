@@ -1,5 +1,7 @@
 class Person:
+    """Base class for people-like objects with simple validation."""
     def __init__(self, name: str, email: str):
+        # Store raw values on private attributes; properties enforce rules.
         self._name = name
         self._email = email
 
@@ -19,6 +21,9 @@ class Person:
 
     @email.setter
     def email(self, value: str):
+        # Very small email format check: must include '@' and a dot.
         if "@" not in value or "." not in value:
-            raise ValueError("Invalid email format.")      
+            raise ValueError("Invalid email format.")
+        # If validation passes, update the stored email value.
+        self._email = value
         

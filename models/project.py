@@ -12,8 +12,10 @@ class Project:
 
         self.title = title
         self.description = description
-        self.due_date = due_date,
-        self.user_id = user_id # Foreign-key relationship back to user
+        # Keep the due date as a simple string (no accidental tuple).
+        self.due_date = due_date
+        # Store the owner user's ID (acts like a foreign key reference).
+        self.user_id = user_id
 
     def to_dict(self) -> dict:
         return {

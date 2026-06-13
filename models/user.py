@@ -21,5 +21,6 @@ class User(Person):
             }
     
     def __repr__(self) -> str:
+        # Simple printable representation useful in console messages
         return f"[User {self.id}: {self.name} \n\n Email: {self.email}]"
     

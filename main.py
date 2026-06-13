@@ -7,9 +7,12 @@ from models.user import User
 from models.project import Project
 from models.task import Task
 
+# Simple console helper from the rich library for pretty output
 console = Console()
 
 def sync_id_counters(data):
+    # Make sure in-memory ID counters for models match the stored data.
+    # This prevents new objects from re-using IDs that already exist.
     if data["users"]:
         User._id_counter = max(u["id"] for u in data["users"])
     if data["projects"]: 
@@ -26,6 +29,7 @@ def handle_add_user(args):
         save_data(data)
         console.print(f"[green]Successfully created user: {new_user}[/green]")
     except ValueError as e:
+        # Validation error (e.g., empty name or bad email) shows a friendly message
         console.print(f"[red]Error setting up profile fields: {e}[/red]")
 
 def handle_list_users(args):
@@ -50,6 +54,7 @@ def handle_add_project(args):
     new_project = Project(title=args.title, description=args.desc, due_date=args.due, user_id=args.user_id)
     data["projects"].append(new_project.to_dict())
     save_data(data)
+    # Confirm success to the user
     console.print(f"[green]Added project: '{new_project.title}' assigned to User ID {args.user_id}[/green]")
 
 def handle_list_projects(args):
@@ -77,15 +82,17 @@ def handle_add_task(args):
     new_task = Task(title=args.title, project_id=args.project_id)
     data["tasks"].append(new_task.to_dict())
     save_data(data)
+    # Let the user know the task was created
     console.print(f"[green]Added task '{new_task.title}' to Project ID {args.project_id}[/green]")
 
 def handle_complete_task(args):
     data = load_data()
     for t in data["tasks"]:
         if t["id"] == args.task_id:
-            t["status"] = "Completed"
-            save_data(data)
-            console.print(f"[green]Task ID {args.task_id} status updated to 'Completed'[/green]")
+                t["status"] = "Completed"
+                save_data(data)
+                # Mark task completed and save the change
+                console.print(f"[green]Task ID {args.task_id} status updated to 'Completed'[/green]")
             return
     console.print(f"[red]Task ID {args.task_id} not found.[/red]")
 

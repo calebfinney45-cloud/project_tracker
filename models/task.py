@@ -11,7 +11,9 @@ class Task:
                 Task._id_counter = task_id
 
         self.title = title
-        self.project_id = project_id  # Foreign key linking back to Project
+        # Keep a simple link back to the project this task belongs to.
+        self.project_id = project_id
+        # Status is a short string like 'Pending' or 'Completed'.
         self.status = status
 
     def to_dict(self) -> dict:
