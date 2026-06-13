@@ -1,0 +1,28 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Alice",
+            "email": "alice@domain.com"
+        }
+    ],
+    "projects": [
+        {
+            "id": 1,
+            "title": "SkyBound UI Canvas",
+            "description": "High-fidelity dashboard engine",
+            "due_date": [
+                "2026-07-15"
+            ],
+            "user_id": 1
+        }
+    ],
+    "tasks": [
+        {
+            "id": 1,
+            "title": "Build out Tailwind base theme",
+            "project_id": 1,
+            "status": "Completed"
+        }
+    ]
+}
