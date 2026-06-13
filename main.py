@@ -28,7 +28,7 @@ def handle_add_user(args):
     except ValueError as e:
         console.print(f"[red]Error setting up profile fields: {e}[/red]")
 
-def handle_list_users(args):
+def handle_list_users():
     data = load_data()
     table = Table(title="Registered Users System Graph")
     table.add_column("ID", style="cyan", no_wrap=True)
