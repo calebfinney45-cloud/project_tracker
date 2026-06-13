@@ -4,6 +4,11 @@
             "id": 1,
             "name": "Alice",
             "email": "alice@domain.com"
+        },
+        {
+            "id": 2,
+            "name": "Vincent",
+            "email": "vincentlivin@domain.com"
         }
     ],
     "projects": [
@@ -15,6 +20,20 @@
                 "2026-07-15"
             ],
             "user_id": 1
+        },
+        {
+            "id": 2,
+            "title": "Hisense System",
+            "description": "A simple program to run in a system",
+            "due_date": "2026/13/6",
+            "user_id": 2
+        },
+        {
+            "id": 3,
+            "title": "Hisense System",
+            "description": "A simple program to run in a system",
+            "due_date": "2026/13/6",
+            "user_id": 2
         }
     ],
     "tasks": [
@@ -23,6 +42,12 @@
             "title": "Build out Tailwind base theme",
             "project_id": 1,
             "status": "Completed"
+        },
+        {
+            "id": 2,
+            "title": "Initialize Hisense core backend",
+            "project_id": 2,
+            "status": "Pending"
         }
     ]
 }
