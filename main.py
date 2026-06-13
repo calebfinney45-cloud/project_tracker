@@ -63,7 +63,12 @@ def handle_list_projects(args):
     for p in data["projects"]:
         if args.user_id and p["user_id"] != args.user_id:
             continue
-        table.add_row(str(p["id"]), p["title"], str(p["user_id"]), p["due_date"])
+        proj_id = str(p.get("id", "N/A"))
+        title = str(p.get("title", "Untitled"))
+        user_id = str(p.get("user_id", "N/A"))
+        due_date = str(p.get("due_date", p.get("due", "N/A")))
+
+        table.add_row(proj_id, title, user_id, due_date)
     console.print(table)
 
 def handle_add_task(args):

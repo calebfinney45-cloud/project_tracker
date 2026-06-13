@@ -9,6 +9,11 @@
             "id": 2,
             "name": "Vincent",
             "email": "vincentlivin@domain.com"
+        },
+        {
+            "id": 3,
+            "name": "Caleb",
+            "email": "caleb@example.com"
         }
     ],
     "projects": [
@@ -34,6 +39,13 @@
             "description": "A simple program to run in a system",
             "due_date": "2026/13/6",
             "user_id": 2
+        },
+        {
+            "id": 4,
+            "title": "Python CLI",
+            "description": "A simple CLI",
+            "due_date": "2026/6/15",
+            "user_id": 3
         }
     ],
     "tasks": [
@@ -47,6 +59,12 @@
             "id": 2,
             "title": "Initialize Hisense core backend",
             "project_id": 2,
+            "status": "Completed"
+        },
+        {
+            "id": 3,
+            "title": "Python CLI",
+            "project_id": 3,
             "status": "Pending"
         }
     ]
