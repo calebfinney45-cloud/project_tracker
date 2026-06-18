@@ -1,0 +1,26 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Eric",
+            "email": "eric@domain.com"
+        }
+    ],
+    "projects": [
+        {
+            "id": 1,
+            "title": "Python CLI",
+            "description": "A simple python CLI",
+            "due_date": "2026/6/14",
+            "user_id": 1
+        }
+    ],
+    "tasks": [
+        {
+            "id": 1,
+            "title": "Complete CLI",
+            "project_id": 1,
+            "status": "Completed"
+        }
+    ]
+}
